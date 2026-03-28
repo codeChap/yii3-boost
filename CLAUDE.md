@@ -19,7 +19,7 @@ composer test
 # Generate code coverage report
 composer test:coverage
 
-# Run PHPStan static analysis (level 8)
+# Run Psalm static analysis
 composer analyze
 
 # Start MCP server (for manual testing)
@@ -136,6 +136,7 @@ No DI configuration is needed -- the Yii3 container auto-wires the tool's constr
 | `migration_inspector` | Migration status and history | `yiisoft/db-migration` |
 | `model_inspector` | ActiveRecord model analysis | `yiisoft/active-record` |
 | `performance_profiler` | EXPLAIN plans, index analysis | `yiisoft/db` |
+| `psalm` | Static analysis and taint security scanning | `vimeo/psalm` (host app) |
 | `route_inspector` | Registered HTTP routes | `yiisoft/router` |
 | `semantic_search` | FTS5 search over Yii3 guides | -- |
 | `service_inspector` | DI container service listing | -- |
@@ -162,7 +163,7 @@ Tools disabled by default in `config/params.php`: `database_query`, `tinker`.
 ## Testing Strategy
 
 - **Framework**: PHPUnit 10+/11+, bootstrap in `tests/bootstrap.php` (loads autoloader only)
-- **Static analysis**: PHPStan level 8 (`composer analyze`), tool files excluded from analysis via `phpstan.neon`
+- **Static analysis**: Psalm level 2 (`composer analyze`), config in `psalm.xml`
 - **Code coverage**: `composer test:coverage` generates HTML report in `coverage/`
 
 Tests should verify:
@@ -200,7 +201,7 @@ src/
 tests/
   bootstrap.php           -- Autoloader bootstrap
 phpunit.xml               -- Test suite config
-phpstan.neon              -- Static analysis config (level 8)
+psalm.xml                 -- Static analysis config (Psalm level 2)
 composer.json             -- Package metadata, scripts, config-plugin
 ```
 

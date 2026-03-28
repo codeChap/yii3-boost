@@ -1,6 +1,0 @@
-parameters:
-    level: 8
-    paths:
-        - src
-    excludePaths:
-        - src/Mcp/Tool/*Tool.php

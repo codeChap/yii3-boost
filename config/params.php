@@ -20,6 +20,7 @@ return [
             'migration_inspector' => true,
             'middleware_inspector' => true,
             'performance_profiler' => true,
+            'psalm' => true,
             'tinker' => false,
             'env_inspector' => true,
             'dev_server' => true,

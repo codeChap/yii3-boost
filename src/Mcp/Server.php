@@ -16,6 +16,7 @@ use codechap\yii3boost\Mcp\Tool\MiddlewareInspectorTool;
 use codechap\yii3boost\Mcp\Tool\MigrationInspectorTool;
 use codechap\yii3boost\Mcp\Tool\ModelInspectorTool;
 use codechap\yii3boost\Mcp\Tool\PerformanceProfilerTool;
+use codechap\yii3boost\Mcp\Tool\PsalmTool;
 use codechap\yii3boost\Mcp\Tool\RouteInspectorTool;
 use codechap\yii3boost\Mcp\Tool\SemanticSearchTool;
 use codechap\yii3boost\Mcp\Tool\ServiceInspectorTool;
@@ -51,6 +52,7 @@ final class Server
         'migration_inspector' => MigrationInspectorTool::class,
         'model_inspector' => ModelInspectorTool::class,
         'performance_profiler' => PerformanceProfilerTool::class,
+        'psalm' => PsalmTool::class,
         'route_inspector' => RouteInspectorTool::class,
         'semantic_search' => SemanticSearchTool::class,
         'service_inspector' => ServiceInspectorTool::class,
