@@ -141,7 +141,7 @@ final class RouteInspectorTool extends AbstractTool
             } elseif ($item instanceof Group) {
                 $groupPrefix = $item->getData('prefix') ?? '';
                 $groupNamePrefix = $item->getData('namePrefix') ?? '';
-                $groupItems = $item->getData('items') ?? [];
+                $groupItems = $item->getData('routes') ?? [];
                 $groupHosts = $item->getData('hosts') ?? [];
 
                 $fullPathPrefix = rtrim($prefixPath, '/') . '/' . ltrim($groupPrefix, '/');
