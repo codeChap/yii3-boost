@@ -70,14 +70,14 @@ final class StdioTransport implements TransportInterface
                 continue;
             }
 
-            $preview = substr($line, 0, 200) . (strlen($line) > 200 ? '...' : '');
+            $preview = substr($this->redactSecrets($line), 0, 200) . (strlen($line) > 200 ? '...' : '');
             $this->log("Received request: $preview", 'DEBUG');
 
             try {
                 $response = $handler($line);
 
                 if ($response !== '') {
-                    $responsePreview = substr($response, 0, 200) . (strlen($response) > 200 ? '...' : '');
+                    $responsePreview = substr($this->redactSecrets($response), 0, 200) . (strlen($response) > 200 ? '...' : '');
                     $this->log("Sending response: $responsePreview", 'DEBUG');
                     fwrite($this->stdout, $response . "\n");
                     fflush($this->stdout);
@@ -91,6 +91,21 @@ final class StdioTransport implements TransportInterface
         }
 
         $this->log('MCP server listener stopped');
+    }
+
+    /**
+     * Mask secret values in a JSON line before it is written to the transport log. MCP requests can
+     * legitimately carry credentials (an authenticate tool's password, OAuth tokens); the log keeps
+     * the shape for debugging but never the secret. Done once here, so every server and tool that
+     * flows through this transport is covered — no per-tool log hygiene required.
+     */
+    private function redactSecrets(string $line): string
+    {
+        return (string) preg_replace(
+            '/"(password|passwd|secret|client_secret|token|access_token|refresh_token|api_key|auth_key|authorization|credential)"\s*:\s*"(?:[^"\\\\]|\\\\.)*"/i',
+            '"$1":"***"',
+            $line,
+        );
     }
 
     public function __destruct()
