@@ -11,6 +11,13 @@ use codechap\yii3boost\Mcp\Transport\TransportInterface;
 return [
     TransportInterface::class => StdioTransport::class,
 
+    // The host's console command map (the `yiisoft/yii-console` `commands` param) is wired onto
+    // Yiisoft\Yii\Console\Application via its command loader — NOT onto the base Symfony Application.
+    // ConsoleCommandInspectorTool type-hints the base Symfony\Component\Console\Application, which the
+    // container would otherwise autowire as a fresh, empty instance (only completion/help/list). Alias
+    // the base class to the configured Yii console app so the inspector sees every registered command.
+    \Symfony\Component\Console\Application::class => \Yiisoft\Yii\Console\Application::class,
+
     Server::class => [
         'class' => Server::class,
         '__construct()' => [
